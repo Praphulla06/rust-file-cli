@@ -26,7 +26,7 @@ A simple command-line tool written in Rust to perform basic file operations like
 Clone this repository:
 
 ```bash
-git clone https://github.com/<your-username>/rust-file-cli.git
+git clone https://github.com/Praphulla06/rust-file-cli.git
 cd rust-file-cli
 ```
 
