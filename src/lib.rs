@@ -1,9 +1,11 @@
-use std::fs::{self, File, OpenOptions};
-use std::io::{Read, Write};
+use std::{
+    fs::{self, File, OpenOptions},
+    io::{Read, Write},
+};
 
 pub fn create_file(filename: &str) {
     if let Err(e) = File::create(filename) {
-        eprintln!("Error creating file: {}", e);
+        println!("Failed to create file: {}", e);
     } else {
         println!("File '{}' created successfully.", filename);
     }
@@ -13,25 +15,24 @@ pub fn read_file(filename: &str) {
     let mut file = match File::open(filename) {
         Ok(file) => file,
         Err(e) => {
-            eprintln!("Error opening file: {}", e);
+            println!("Error opening file: {}", e);
             return;
         }
     };
 
-    let mut contents = String::new();
-    if let Err(e) = file.read_to_string(&mut contents) {
+    let mut content = String::new();
+    if let Err(e) = file.read_to_string(&mut content) {
         eprintln!("Error reading file: {}", e);
         return;
     }
-
-    println!("File contents:\n{}", contents);
+    println!("File contents:\n{}", content);
 }
 
 pub fn delete_file(filename: &str) {
     if let Err(e) = fs::remove_file(filename) {
-        eprintln!("Error deleting file: {}", e);
+        println!("Failed to delete file, {}", e);
     } else {
-        println!("File '{}' deleted successfully.", filename);
+        println!("File: {} deleted successfully", filename);
     }
 }
 
@@ -44,7 +45,7 @@ pub fn write_to_file(filename: &str, content: &[String]) {
     if let Err(e) = fs::write(filename, &content) {
         eprintln!("Error writing to file: {}", e);
     } else {
-        println!("Wrote '{}' to file '{}'.", content, filename);
+        println!("Successfully wrote '{}' to file '{}'.", content, filename);
     }
 }
 
@@ -54,11 +55,7 @@ pub fn append_to_file(filename: &str, content: &[String]) {
         None => return,
     };
 
-    let mut file = match OpenOptions::new()
-        .append(true)
-        .create(true)
-        .open(filename)
-    {
+    let mut file = match OpenOptions::new().append(true).create(true).open(filename) {
         Ok(file) => file,
         Err(e) => {
             eprintln!("Error opening file: {}", e);
